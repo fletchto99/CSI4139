@@ -1,0 +1,146 @@
+\documentclass[fleqn, 12pt]{article}
+
+% packages %
+\usepackage[headheight=110pt,margin=1in]{geometry} % page margins %
+\usepackage{mathtools, amssymb} % math %
+\usepackage{tabularx, multirow} % tables %
+\usepackage{minted} % code %
+\usepackage{graphicx} % graphics %
+\usepackage{enumerate} % lists %
+\usepackage{adjustbox} % images %
+\usepackage[T1]{fontenc} % fonts %
+\usepackage[protrusion=true,expansion=true]{microtype} % font clarity %
+\usepackage{fancyhdr} % headers and footers %
+\usepackage{lastpage} % reference page numbers %
+\usepackage{color} % colors for code
+\usepackage{tikz} % for graphs
+\usepackage{soul} % for strikthroughout
+
+% Document details %
+\newcommand{\university}{University of Ottawa}
+\newcommand{\name}{Matthew Langlois}
+\newcommand{\studentNumber}{7731813}
+\newcommand{\semester}{Fall 2017}
+\newcommand{\assignmentType}{Lab}
+\newcommand{\assignemntNumber}{1}
+\newcommand{\dueDate}{Monday Sept. 25}
+\newcommand{\courseCode}{CSI4139}
+\newcommand{\courseTitle}{Design of Secure Systems}
+
+% Center image and diagrams %
+\adjustboxset*{center}
+
+% Prevent paragraph indents, this isn't an English assignment! %
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+
+\setminted{
+    fontfamily=tt,
+    gobble=0,
+    frame=single,
+    funcnamehighlighting=true,
+    tabsize=4,
+    obeytabs=false,
+    mathescape=false
+    samepage=false,
+    showspaces=false,
+    showtabs =false,
+    texcl=false,
+    breaklines=true,
+}
+
+% inline code
+\definecolor{codegray}{gray}{0.9}
+\newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+
+% Code from tile
+\newcommand{\codefile}{\inputminted}
+
+% Graphing stuff
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
+\usetikzlibrary{automata}
+
+% Define ceiling and floor functions
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% Create set compliment command %
+\newcommand{\setcomp}[1]{{#1}^{\mathsf{c}}}
+
+% Create logic command aliases %
+\newcommand{\limplies}{\rightarrow}
+\newcommand{\nequiv}{\not\equiv}
+\newcommand{\liff}{\leftrightarrow}
+
+% Document header %
+\newcommand{\makeheader}{
+    \noindent
+    \courseTitle \hfill \university\\
+    \courseCode \hfill \semester
+    \begin{center}
+        \textbf{\assignmentType \#\assignemntNumber}\\
+        \name \hspace{1pt} - \studentNumber\\
+        \dueDate\\
+    \end{center}
+    \vspace{6pt}
+    \hrule
+}
+
+% first page header & footer %
+\fancypagestyle{firstpage}{
+  \fancyhf{}
+  \renewcommand{\footrulewidth}{0.1mm}
+  \fancyfoot[R]{Assignment \assignemntNumber}
+  \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
+  \fancyfoot[L]{\courseCode}
+  \renewcommand{\headrulewidth}{0mm}
+}
+
+% Page header and footers %
+\fancyhf{}
+\renewcommand{\footrulewidth}{0.1mm}
+\fancyfoot[R]{Assignment \assignemntNumber}
+\fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
+\fancyfoot[L]{\courseCode}
+\fancyhead[L]{\name}
+\fancyhead[R]{\studentNumber}
+
+% Apply headers & footer page style %
+\pagestyle{fancy}
+\begin{document}
+
+% ignore fancy headers on this page and use document header %
+\thispagestyle{firstpage}
+\makeheader
+
+\section*{Part 1}
+
+The following code is the encryption/decryption program written in Javascript. Some sample commands have been provided at the top of the file which will generate the keys. I have also attached the file to my submission.
+
+\codefile{javascript}{lab.js}
+
+To hash and sign I use the sender's private key along with SHA-256. I chose to use SHA-256 since other algorithms have such as SHA-1 have proof-of-concepts which break them.
+
+To achieve the encryption task I chose to use AES-256-CBC. Advanced Encryption Standard (or AES for short) is one of the industry standard used for symmetric encryption. In this case I chose to use a 256 bit key for maximum security.
+
+Once symmetric encryption is complete the key is then encrypted using RSA. To do so I chose to use the package "ursa" which offers some helper methods to access the standard Crypto methods in Node. Essentially I'm using alice's public key to encrypt the data and then Alice can decrypt it with her private key.
+
+
+Finally I've also created a helper method to generate 2 sets of private and public keypairs. In this example I use Alice and Bob.
+
+\section*{Part 2}
+
+To complete part 2 we started with a scan for vulnerabilities using NMAP using the vuln script like so: \code{nmap --script vuln 137.122.47.142}. NMap came back reporting that IIS 7.5 was running on port 80 and was vulnerable to \code{MS15-034}. Furthermore there are other exploits which exist for this version of IIS however most of them rely on other services such as IIS-FTP server.
+
+There were 2 public exploits which made use of this vulnerability. One was a denial of service and the other was a memory leak. Both of which could be exploited using Metasploit (which is publicly available on GitHub):
+
+\adjincludegraphics[width=0.75\textwidth]{exploits.png}
+
+Finally, to patch these vulnerabilities the best course of action would be applying the patches provided by the vendor. Some other preventative measures could include deploying a firewall which could block ports which arent meant to be open. For example if this ISS instance wasn't supposed to be public then port 80 could be closed off.
+
+
+
+\end{document}
