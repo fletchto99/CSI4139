@@ -11,9 +11,7 @@ const path = require('path');
 //decrypt test/file.enc test/file.enc.key test/file.sig keys/apub keys/bprv
 
 const commands = {
-
     encrypt: (file, encryptionKey, senderPrivKey, recipientPubKey) => {
-
         //read input file
     	let input = fs.readFileSync(file);
 
@@ -36,7 +34,6 @@ const commands = {
 
         //Let the user know the processs id done
         console.log(`Done saving files! ${file}.enc ${file}.key.enc ${file}.asc`);
-
     },
 
     decrypt: (encFile, encSymKey, signature, senderPubKey, recipientPrivKey) => {
