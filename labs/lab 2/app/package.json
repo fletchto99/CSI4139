@@ -1,5 +1,5 @@
 {
-  "name": "Lab 2",
+  "name": "Lab2",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -26,8 +26,7 @@
     "pg": "^7.3.0",
     "promise": "^8.0.1",
     "pug": "^2.0.0-beta6",
-    "pug-bootstrap": "0.0.15",
-    "webshot": "^0.18.0"
+    "pug-bootstrap": "0.0.15"
   },
   "repository": {
     "type": "git",
