@@ -1,0 +1,23 @@
+extends ../layout_reg
+
+append content
+    if error
+        h1=error
+    form(name="register", method="post")
+        div.form-group
+            div.input
+                label(for="phone") Phone Number
+                input.form-control(type="phone", name="phone", id="phone")
+        div.form-group
+            div.input
+                label(for="username") Username
+                input.form-control(type="text", name="username", id="username")
+        div.form-group
+            div.input
+                label(for="password") Password
+                input.form-control(type="password", name="password", id="password")
+        div.form-group
+            div.input
+                label(for="confirm_password") Confirm Password
+                input.form-control(type="password", name="confirm_password", id="confirm_password")
+        button.btn.btn-primary(type="submit") Register

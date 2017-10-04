@@ -1,0 +1,27 @@
+{
+    "developer_mode": true,
+    "app": {
+    	"port": 8080
+    },
+    "twilio": {
+    	"apikey": "<secret>",
+    	"account": "<secret>",
+    	"phone": "<secret>"
+    },
+    "database": {
+	    "host": "localhost",
+	    "port": 5432,
+	    "database": "<secret>",
+	    "user": "<secret>",
+	    "password": "<secret>"
+    },
+    "session": {
+	    "secret": "<secret>",
+	    "name": "lab2",
+	    "resave": false,
+	    "saveUninitialized": true,
+	    "cookie": {
+	        "secure": false
+	    }
+    }
+}

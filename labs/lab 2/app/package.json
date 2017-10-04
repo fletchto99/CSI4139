@@ -1,0 +1,36 @@
+{
+  "name": "Lab 2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "author": "Matt Langlois <fletchto99@gmail.com> (https://fletchto99.com)",
+  "contributors": [
+    {
+      "name": "Matt Langlois",
+      "email": "fletchto99@gmail.com"
+    },
+    {
+      "name": "Alex Billard",
+      "email": "abill015@uottawa.ca"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.15.2",
+    "connect-pg-simple": "^4.2.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "morgan": "^1.7.0",
+    "pg": "^7.3.0",
+    "promise": "^8.0.1",
+    "pug": "^2.0.0-beta6",
+    "pug-bootstrap": "0.0.15",
+    "webshot": "^0.18.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fletchto99/csi4139.git"
+  }
+}

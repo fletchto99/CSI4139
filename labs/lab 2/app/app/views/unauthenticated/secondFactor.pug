@@ -1,0 +1,17 @@
+extends ../layout_reg
+
+append content
+    if error
+        h1=error
+    form(name="login", method="post")
+        div.form-group
+            div.input
+                label(for="secondFactor") 6 Digit Code
+                input.form-control(type="text", name="secondFactor", id="secondFactor")
+        div.row
+            div.col-sm-4
+                button.btn.btn-block.btn-primary(type="submit", name="action", value="login") Login
+            div.col-sm-4
+                button.btn.btn-block.btn-secondary(type="submit", name="action", value="resend") Resend
+            div.col-sm-4
+                button.btn.btn-block.btn-danger(type="submit", name="action", value="cancel") Cancel
