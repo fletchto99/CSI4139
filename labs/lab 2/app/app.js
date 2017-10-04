@@ -23,7 +23,7 @@ database.connect(config.database, null).then(() => {
     console.log("Controllers loaded!")
 
 
-    lab.listen(config.app.port, () => console.log("Game ready!"));
+    lab.listen(config.app.port, () => console.log("System ready!"));
 
 }, () => {
     console.log("Error connecting to database!");
