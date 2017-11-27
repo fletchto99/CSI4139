@@ -4,7 +4,7 @@
 \usepackage[headheight=110pt,margin=1in]{geometry} % page margins %
 \usepackage{mathtools, amssymb} % math %
 \usepackage{tabularx, multirow} % tables %
-\usepackage{minted} % code %
+\usepackage[outputdir=.latexcache]{minted} % code %
 \usepackage{graphicx} % graphics %
 \usepackage{enumerate} % lists %
 \usepackage{adjustbox} % images %
@@ -120,7 +120,7 @@
 
 The following code is the encryption/decryption program written in Javascript. Some sample commands have been provided at the top of the file which will generate the keys. I have also attached the file to my submission.
 
-\codefile{javascript}{lab.js}
+\codefile{javascript}{"Part 1/lab 1.js"}
 
 To hash and sign I use the sender's private key along with SHA-256. I chose to use SHA-256 since other algorithms have such as SHA-1 have proof-of-concepts which break them.
 
@@ -137,7 +137,7 @@ To complete part 2 we started with a scan for vulnerabilities using NMAP using t
 
 There were 2 public exploits which made use of this vulnerability. One was a denial of service and the other was a memory leak. Both of which could be exploited using Metasploit (which is publicly available on GitHub):
 
-\adjincludegraphics[width=0.75\textwidth]{exploits.png}
+\adjincludegraphics[width=0.75\textwidth]{"Part 2/exploits.png"}
 
 Finally, to patch these vulnerabilities the best course of action would be applying the patches provided by the vendor. Some other preventative measures could include deploying a firewall which could block ports which arent meant to be open. For example if this ISS instance wasn't supposed to be public then port 80 could be closed off.
 
