@@ -1,0 +1,40 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//Load tracking code above}
+\PYG{n+nx}{startime} \PYG{o}{=} \PYG{p}{(}\PYG{k}{new} \PYG{n+nb}{Date}\PYG{p}{).}\PYG{n+nx}{getTime}\PYG{p}{();}
+\PYG{k+kd}{var} \PYG{n+nx}{count} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+
+\PYG{k+kd}{function} \PYG{n+nx}{unixtime}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{a} \PYG{o}{=} \PYG{k}{new} \PYG{n+nb}{Date}\PYG{p}{;}
+    \PYG{k}{return} \PYG{n+nb}{Date}\PYG{p}{.}\PYG{n+nx}{UTC}\PYG{p}{(}\PYG{n+nx}{a}\PYG{p}{.}\PYG{n+nx}{getFullYear}\PYG{p}{(),} \PYG{n+nx}{a}\PYG{p}{.}\PYG{n+nx}{getMonth}\PYG{p}{(),} \PYG{n+nx}{a}\PYG{p}{.}\PYG{n+nx}{getDay}\PYG{p}{(),} \PYG{n+nx}{a}\PYG{p}{.}\PYG{n+nx}{getHours}\PYG{p}{(),} \PYG{n+nx}{a}\PYG{p}{.}\PYG{n+nx}{getMinutes}\PYG{p}{(),} \PYG{n+nx}{a}\PYG{p}{.}\PYG{n+nx}{getSeconds}\PYG{p}{())} \PYG{o}{/} \PYG{l+m+mi}{1}\PYG{n+nx}{E3}
+\PYG{p}{\PYGZcb{}}
+\PYG{n+nx}{url\PYGZus{}array} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}https://github.com/greatfire/\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}https://github.com/cn\PYGZhy{}nytimes/\PYGZdq{}}\PYG{p}{];}
+\PYG{n+nx}{NUM} \PYG{o}{=} \PYG{n+nx}{url\PYGZus{}array}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{;}
+
+\PYG{k+kd}{function} \PYG{n+nx}{r\PYGZus{}send2}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{a} \PYG{o}{=} \PYG{n+nx}{unixtime}\PYG{p}{()} \PYG{o}{\PYGZpc{}} \PYG{n+nx}{NUM}\PYG{p}{;}
+    \PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{url\PYGZus{}array}\PYG{p}{[}\PYG{n+nx}{a}\PYG{p}{])}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kd}{function} \PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{a}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{b}\PYG{p}{;}
+    \PYG{n+nx}{\PYGZdl{}}\PYG{p}{.}\PYG{n+nx}{ajax}\PYG{p}{(\PYGZob{}}
+        \PYG{n+nx}{url}\PYG{o}{:} \PYG{n+nx}{a}\PYG{p}{,}
+        \PYG{n+nx}{dataType}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}script\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nx}{timeout}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{n+nx}{E4}\PYG{p}{,}
+        \PYG{n+nx}{cache}\PYG{o}{:} \PYG{o}{!}\PYG{l+m+mi}{0}\PYG{p}{,}
+        \PYG{n+nx}{beforeSend}\PYG{o}{:} \PYG{k+kd}{function}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{requestTime} \PYG{o}{=} \PYG{p}{(}\PYG{k}{new} \PYG{n+nb}{Date}\PYG{p}{).}\PYG{n+nx}{getTime}\PYG{p}{()}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nx}{complete}\PYG{o}{:} \PYG{k+kd}{function}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{responseTime} \PYG{o}{=} \PYG{p}{(}\PYG{k}{new} \PYG{n+nb}{Date}\PYG{p}{).}\PYG{n+nx}{getTime}\PYG{p}{();}
+            \PYG{n+nx}{b} \PYG{o}{=} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{floor}\PYG{p}{(}\PYG{n+nx}{responseTime} \PYG{o}{\PYGZhy{}} \PYG{n+nx}{requestTime}\PYG{p}{);}
+            \PYG{l+m+mi}{3}\PYG{n+nx}{E5} \PYG{o}{\PYGZgt{}} \PYG{n+nx}{responseTime} \PYG{o}{\PYGZhy{}} \PYG{n+nx}{startime} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{p}{(}\PYG{n+nx}{r\PYGZus{}send}\PYG{p}{(}\PYG{n+nx}{b}\PYG{p}{),} \PYG{n+nx}{count} \PYG{o}{+=} \PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{})}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kd}{function} \PYG{n+nx}{r\PYGZus{}send}\PYG{p}{(}\PYG{n+nx}{a}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{setTimeout}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}r\PYGZus{}send2()\PYGZdq{}}\PYG{p}{,} \PYG{n+nx}{a}\PYG{p}{)}
+\PYG{p}{\PYGZcb{}}
+\PYG{n+nx}{setTimeout}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}r\PYGZus{}send2()\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{n+nx}{E3}\PYG{p}{);}
+\end{Verbatim}

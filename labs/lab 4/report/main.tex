@@ -1,0 +1,297 @@
+\documentclass[fleqn, 12pt]{article}
+
+% packages %
+\usepackage[includeheadfoot,headheight=15pt,margin=0.5in,left=1in,right=1in,headsep=10pt]{geometry} % page margins %
+\usepackage{mathtools, amssymb} % math %
+\usepackage{tabularx, multirow} % tables %
+\usepackage[outputdir=.latexcache]{minted} % code %
+\usepackage{graphicx} % graphics %
+\usepackage{enumerate} % lists %
+\usepackage{adjustbox} % images %
+\usepackage[T1]{fontenc} % fonts %
+\usepackage[protrusion=true,expansion=true]{microtype} % font clarity %
+\usepackage{fancyhdr} % headers and footers %
+\usepackage{lastpage} % reference page numbers %
+\usepackage{color} % colors for code %
+\usepackage{tikz} % for graphs %
+\usepackage{soul} % for strikethroughout %
+\usepackage{upquote} % Fix single quotes %
+\usepackage{etoolbox} % Conditional checks %
+\usepackage{hyperref} % Hyperlinks %
+\usepackage{indentfirst} % fix indentation - only for essays %
+\usepackage[figure,table]{totalcount} % For counting tables and figures %
+\usepackage[utf8]{inputenc} % Encode as UTF-8 %
+\usepackage{biblatex} % References %
+\addbibresource{references.bib} % bib source %
+
+% Document details %
+\newcommand{\university}{University of Ottawa}
+\newcommand{\name}{Matthew Langlois}
+\newcommand{\studentNumber}{7731813}
+\newcommand{\semester}{Fall 2017}
+\newcommand{\assignmentType}{Lab}
+\newcommand{\assignmentNumber}{4}
+\newcommand{\dueDate}{Nov. 27}
+\newcommand{\courseCode}{CSI4139}
+\newcommand{\courseTitle}{Design of Secure Systems}
+\newcommand{\essayTitle}{<Title>} % only for essays %
+\newcommand{\essaySubtitle}{<subtitle>} % only for essays %
+\newcommand{\essayAbstract}{} % Only for essays -- leave empty for no abstract %
+
+% Center image and diagrams %
+\adjustboxset*{center}
+
+% Code settings %
+\setminted{
+    fontfamily=tt,
+    gobble=0,
+    frame=single,
+    funcnamehighlighting=true,
+    tabsize=4,
+    obeytabs=false,
+    mathescape=false
+    samepage=false,
+    showspaces=false,
+    showtabs =false,
+    texcl=false,
+    breaklines=true,
+}
+
+% inline code %
+\definecolor{codegray}{gray}{0.9}
+\newcommand{\code}[2]{\colorbox{codegray}{\mintinline{#1}{#2}}}
+
+% Code from tile %
+\newcommand{\codefile}{\inputminted}
+
+% Graphing stuff %
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
+\usetikzlibrary{automata}
+
+% Define ceiling and floor functions %
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% Create set compliment command %
+\newcommand{\setcomp}[1]{{#1}^{\mathsf{c}}}
+
+% Create logic command aliases %
+\newcommand{\limplies}{\rightarrow}
+\newcommand{\nequiv}{\not\equiv}
+\newcommand{\liff}{\leftrightarrow}
+
+% first page header & footer %
+\fancypagestyle{assignment}{
+    \fancyhf{}
+    \renewcommand{\footrulewidth}{0.1mm}
+    \fancyfoot[R]{\assignmentType \assignmentNumber}
+    \fancyfoot[C]{\thepage \hspace{1pt} of \pageref*{LastPage}}
+    \fancyfoot[L]{\courseCode}
+    \renewcommand{\headrulewidth}{0mm}
+}
+
+% Frontmatter for essay page numbering%
+\fancypagestyle{frontmatter}{
+    \fancyhf{}
+    \renewcommand{\footrulewidth}{0.1mm}
+    \fancyfoot[R]{\assignmentType \assignmentNumber}
+    \fancyfoot[C]{\thepage \hspace{1pt} of \pageref*{EndFrontMatter}}
+    \fancyfoot[L]{\courseCode}
+    \fancyhead[L]{\name}
+    \fancyhead[R]{\studentNumber}
+}
+
+% Essay body page numbering %
+\fancypagestyle{body}{
+    \fancyhf{}
+    \renewcommand{\footrulewidth}{0.1mm}
+    \fancyfoot[R]{\assignmentType \assignmentNumber}
+    \fancyfoot[C]{\thepage \hspace{1pt} of \pageref*{LastPage}}
+    \fancyfoot[L]{\courseCode}
+    \fancyhead[L]{\name}
+    \fancyhead[R]{\studentNumber}
+}
+
+% Page header and footers %
+\fancyhf{}
+\renewcommand{\footrulewidth}{0.1mm}
+\fancyfoot[R]{\assignmentType \assignmentNumber}
+\fancyfoot[C]{\thepage \hspace{1pt} of \pageref*{LastPage}}
+\fancyfoot[L]{\courseCode}
+\fancyhead[L]{\name}
+\fancyhead[R]{\studentNumber}
+
+% Apply headers & footer page style %
+\pagestyle{fancy}
+
+% Assignment first page header %
+\newcommand{\beginassignemnt}{
+    % Prevent paragraph indents, this isn't an English assignment! %
+    \newlength\tindent
+    \setlength{\tindent}{\parindent}
+    \setlength{\parindent}{0pt}
+
+    \thispagestyle{assignment}
+    \noindent
+    \courseTitle \hfill \university\\
+    \courseCode \hfill \semester
+    \begin{center}
+        \textbf{\assignmentType\text{ }\#\assignmentNumber}\\
+        \name \hspace{1pt} - \studentNumber\\
+        \dueDate\\
+    \end{center}
+    \vspace{6pt}
+    \hrule
+    \vspace{1.5\headsep}
+}
+
+% Essay titlepage stuff %
+\newcommand{\beginessay}{
+    % Load all citations %
+    \nocite{*}
+
+    % Special numbering for front matter %
+    \pagestyle{frontmatter}
+    \pagenumbering{roman}
+
+    % Titlepage stuff %
+    \begin{center}
+        \normalsize
+        \textsc{\university}\\[5cm]
+        \LARGE \textbf{\MakeUppercase{\essayTitle}}\\[0.5cm]
+        \large \text{ }\essaySubtitle\text{ }\\[10cm] % blank \texts are used for empty subtitles %
+        \normalsize
+        \textsc{\name}\\
+        \textsc{\studentNumber}\\
+        \textsc{\courseCode}\\
+        \textsc{\semester}\\
+        \textsc{\dueDate}
+    \end{center}
+    \thispagestyle{empty}
+    % End title page stuff %
+
+    % Table of Contents %
+    \newpage
+    \tableofcontents
+    \newpage
+
+    % If more than 1 table/figure show appropriate lists %
+    \iftotalfigures
+        \addcontentsline{toc}{section}{\listfigurename}
+        \listoffigures
+    \fi
+    \iftotaltables
+        \addcontentsline{toc}{section}{\listtablename}
+        \listoftables
+    \fi
+
+    % Display an abstract if the abstract isn't empty %
+    \ifdefempty{\essayAbstract}{}{
+        \newpage
+        \addcontentsline{toc}{section}{Abstract}
+        \begin{abstract}
+            \essayAbstract
+        \end{abstract}
+
+    }
+    \label{EndFrontMatter}
+    \newpage
+
+    % Reset page numbering %
+    \pagenumbering{arabic}
+    \pagestyle{body}
+}
+
+% Update the bibliography command to add its self to the references
+\let\oldprintbib\printbibliography
+\renewcommand{\printbibliography}{
+    \newpage
+    \oldprintbib
+    \addcontentsline{toc}{section}{References}
+    \newpage
+}
+
+% Begin the document %
+\begin{document}
+
+% makes the header for assignment/titlepage for essay %
+% \beginessay
+\beginassignemnt
+
+\begin{enumerate}
+    \item
+        The first vulnerability was very straight forward. There was a reflected XSS in the search parameter. To exploit this vulnerability the XSS injection just needed to be placed in the query parameter of the URL.\\
+
+        The code used was: \code{html}{<script>alert(document.cookie)</script>}\\
+
+        The vulnerability could have been prevented by sanitizing the user's input and ensuring that they are not injecting Javascript\\
+
+        Here's an example of the vulnerability being exploited:
+
+        \adjincludegraphics[width=0.8\textwidth]{../screenshots/1.png}
+
+    \item
+        The second vulnerability was also quite straight forward. There was a stored XSS in the post section of Facebroke. To exploit this vulnerability the XSS injection just needed to be placed in the contents of the post.\\
+
+        The code used was: \code{html}{<script>alert('I know xss')</script>}\\
+
+        The vulnerability could have been prevented by sanitizing the user's input and ensuring that they are not injecting Javascript.\\
+
+        Here's an example of the vulnerability being exploited:
+
+        \adjincludegraphics[width=0.8\textwidth]{../screenshots/2.png}
+
+    \item
+        The third vulnerability made use of modifying a POST request as it was in transit. To complete this task I setup a simple proxy using Burp to intercept the post message request. Inside the post request there was a variable representing the user's ID. This could be changed to be another user thus posting it on their behalf.\\
+
+        No code required modifications for this vulnerability. Instead the POST request required modification.\\
+
+        The vulnerability could have been prevented by using proper access control at the endpoints. In this case the user posting the comment should have been checked against the user which is currently logged in and sending the request. To do this the ID of the user should be stored in their session which can be identified by the cookie. Then the session can be compared against the id in the request.\\
+
+        Here's an example of the vulnerability being exploited:
+
+        \adjincludegraphics[width=0.8\textwidth]{../screenshots/3.png}
+
+    \item
+        The 4th vulnerability made use of spoofing the user's ID again. When uploading an image the superuser ID 103 could be set thus allowing the image to be uploaded on behalf of another user.\\
+
+        Similar to the last vulnerability, the exploit required no code but rather modifying a POST request.\\
+
+        Much like the last exploit this one could have been prevented with proper access control and authorization checks on the endpoint.\\
+
+        Here's an example of the vulnerability being exploited:
+
+        \adjincludegraphics[width=0.8\textwidth]{../screenshots/4.png}
+
+    \item
+        The 5th vulnerability made use of a very basic SQL injection attack in the query parameter of the get request.\\
+
+        To exploit this vulnerability all that was required was setting the userid parameter to \code{sql}{1 or 1=1--}.\\
+
+        The vulnerability could have been prevented by sanitizing the user's input. Furthermore prepared statements could have been used to ensure that SQL injection isn't possible.\\
+
+        \newpage
+
+        Here's an example of the vulnerability being exploited:
+
+        \adjincludegraphics[width=0.8\textwidth]{../screenshots/5.png}
+
+    \item
+        The last vulnerability made use of an XSS within an SVG file. The SVG spec allows the use of script tags. When the browser renders the SVG the vm notices the Javascript and executes it. Thus, in this case, popping up the alert box.\\
+
+        The code used was:
+
+        \codefile{xml}{../screenshots/6.svg}
+
+        The vulnerability could have been prevented by disallowing SVG files from being uploaded for display pictures. However if SVG is absolutely required then the uploaded file should be sanitized to ensure that there are no script tags.\\
+
+        \newpage
+
+        Here's an example of the vulnerability being exploited:
+
+        \adjincludegraphics[width=0.8\textwidth]{../screenshots/6.png}
+\end{enumerate}
+
+\end{document}
